@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Iniciar sxhkd
+sxhkd &
+
+# Configurar el teclado a español
+setxkbmap es &
+
+# Establecer el cursor
+xsetroot -cursor_name left_ptr &
+
+# Iniciar picom (compositor) con experimental-backends
+picom --config /home/mruniverse/.config/picom/picom.conf &
+
+# Establecer el fondo de pantalla
+feh --bg-fill /home/mruniverse/Imágenes/aboreo.jpg &
+
+# Establecer el nombre de la ventana para compatibilidad con Java
+wmname LG3D
+
+# Configuración para aplicaciones Java
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# Configurar monitores
+xrandr --output LVDS-1 --primary --mode 1600x900 --pos 0x0 --rotate normal
+xrandr --output VGA-1 --mode 1440x900_75 --rate 75 --pos 1600x0 --rotate normal
+
+# Configurar los espacios de trabajo para cada monitor
+bspc monitor LVDS -d I II III IV V
+bspc monitor VGA-0 -d VI VII VIII IX X
+
+# Configurar el ancho del borde y el espacio entre ventanas
+bspc config border_width 2
+bspc config window_gap 12
+
+# Configurar la proporción de división
+bspc config split_ratio 0.52
+
+# Configurar ventanas monocromo sin bordes
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+
+# Establecer el color del borde de las ventanas
+bspc config focused_border_color "#87CEEB"    # Borde azul cielo para la ventana enfocada
+bspc config normal_border_color "#87CEEB"     # Borde azul cielo para las ventanas no enfocadas
+
+# Reglas para aplicaciones específicas
+
+# Establecer el enfoque para que siga al puntero del ratón
+bspc config focus_follows_pointer true
